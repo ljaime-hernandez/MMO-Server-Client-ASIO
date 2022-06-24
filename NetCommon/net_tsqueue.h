@@ -40,7 +40,7 @@ namespace netmsg
 	namespace net
 	{
 
-		// thread-safe queue
+		// Thread-safe queue
 		template<typename T>
 		class tsqueue
 		{
@@ -70,7 +70,8 @@ namespace netmsg
 				std::scoped_lock lock(muxQueue);
 				deqQueue.emplace_back(std::move(item));
 
-				// the notify_one function will send a wake up signal for the server to process the incoming information, this is done in both push front or push back tsqueue as this will contain the message information
+				// The notify_one function will send a wake up signal for the server to process the incoming information, this is done 
+				// in both push front or push back tsqueue as this will contain the message information
 				std::unique_lock<std::mutex> ul(muxBlocking);
 				cvBlocking.notify_one();
 			}
@@ -80,7 +81,8 @@ namespace netmsg
 				std::scoped_lock lock(muxQueue);
 				deqQueue.emplace_front(std::move(item));
 
-				// the notify_one function will send a wake up signal for the server to process the incoming information, this is done in both push front or push back tsqueue as this will contain the message information
+				// The notify_one function will send a wake up signal for the server to process the incoming information, this is done in 
+				// both push front or push back tsqueue as this will contain the message information
 				std::unique_lock<std::mutex> ul(muxBlocking);
 				cvBlocking.notify_one();
 			}
@@ -119,22 +121,25 @@ namespace netmsg
 				return t;
 			}
 
-			// the server will be locked in this funtion, waiting for any interaction to make it work again. on Windows processors, the threads sometimes are erroneously utilized, this is inconvenient for servers that are just waiting for something to happen, but this code is designed so if that would happen. then it would just simply turn back into this loop
+			// The server will be locked in this funtion, waiting for any interaction to make it work again. on Windows processors, 
+			// the threads sometimes are erroneously utilized, this is inconvenient for servers that are just waiting for something 
+			// to happen, but this code is designed so if that would happen. then it would just simply turn back into this loop
 			void wait()
 			{
 				while (empty())
 				{
 					std::unique_lock<std::mutex> ul(muxBlocking);
-					// sends the thread to sleep until a signal is received
+					// Sends the thread to sleep until a signal is received
 					cvBlocking.wait(ul);
 				}
 			}
 
 		protected:
-			// mutex will protect the double ended queue by locking the process on course until the function is finished, this will be done for each function on this class
+			// Mutex will protect the double ended queue by locking the process on course until the function is finished, this will 
+			// be done for each function on this class
 			std::mutex muxQueue;
 			std::deque<T> deqQueue;
-			//
+			
 			std::condition_variable cvBlocking;
 			std::mutex muxBlocking;
 		};
