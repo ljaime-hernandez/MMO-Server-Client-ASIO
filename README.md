@@ -2,6 +2,20 @@
 
 https://user-images.githubusercontent.com/65676644/175662381-0a3bf5a0-c93d-4586-ac56-9b2cf2be2d02.mp4
 
+Created for educational purposes, this server and client prototypes were created on C++ to improve
+my knowledge on network and low-level I/O programming. Some of the main topics i touch on the 
+files are:
+
+* client interface solution by creating connect/disconnect methods
+* server interface solution capable of handling several client sockets, with its respective methods to
+securely transfer data based on actions previously defined
+* understand and apply thread-safe queues for multiple client connections on the same server and handle
+outgoing or incoming messages by locking threads with mutex
+* error handling for each of the connection steps, being the server, clients, connection, or messages interaction
+* connection model which will be used by either the client or the server, handling certain methods
+depending on the programs execution
+* message templates with I/O overload to handle streams of any data type, avoiding incoming trivial data 
+
 In this code, we can see how ASIO handles the temporal properties of network communication
 by helping us execute the code when is necessary to do so. one of the problems encountered
 on this HTTP example is we do not know in advance how much data is going to be sent, which is
@@ -25,6 +39,13 @@ request and make it more strict for the system to decide what to do with each of
 but doing so limits the amount of messages we will receive as we would have to declare all kind
 of messages we do not even know about now, so this solution will include the use of templates,
 which will make the code more versatile when receiving the data
+
+The connection will receive ownership definition (either client or server) , a reference of the ASIO 
+context for connection handling, a unique socket handled by whoever is using the connection, and 
+reference to the incoming message queue for either the client or the server interface. As the context 
+and the incoming messages are references, the definition is imperative. The body of the connection will 
+assign the ownership, the reason why it is not defined in the constructor header or listing is because 
+we want to explicitly separate the critical and non critical information.
 
 ![enum](images/enum.png)
 

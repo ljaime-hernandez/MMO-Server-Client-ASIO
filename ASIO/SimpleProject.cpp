@@ -15,11 +15,11 @@
 #include <asio/ts/internet.hpp>
 
 
-// As network connections can be unpredictable in the time we receive an specific response from a server or it may vary bastly on the amount
+// As network connections can be unpredictable in the time we receive an specific response from a server or it may vary vastly on the amount
 // of data we receive from it, then a simple but smart solution would be to instantiate an asynchronous function with ASIOs help for it to 
 // read all the information it receives.
 // As we dont know how much data we will receive on the http request, we will declare a vector with enough space for it to receive as much
-// information as neccesary
+// information as necessary
 std::vector<char> vBuffer(20 * 1024);
 
 

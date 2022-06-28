@@ -27,8 +27,8 @@ namespace netmsg
 			};
 
 			// The connection will receive ownership definition, a reference of the ASIO context for connection handling, a unique 
-			// socket handled by whoever is using the connection, a reference to the incoming message queue for either the client 
-			// or the server interface. as the context and the incoming messages are references, the definition is imperative. The 
+			// socket handled by whoever is using the connection, and reference to the incoming message queue for either the client 
+			// or the server interface. As the context and the incoming messages are references, the definition is imperative. The 
 			// body of the connection will assign the ownership, the reason why it is not defined in the constructor header or 
 			// listing is because we want to explicitly separate the critical and non critical information
 			connection(owner parent, asio::io_context& asioContext, asio::ip::tcp::socket socket, tsqueue<owned_message<T>>& qIn) : m_asioContext(asioContext), m_socket(std::move(socket)), m_qMessagesIn(qIn)
@@ -286,7 +286,7 @@ namespace netmsg
 				}
 				else
 				{
-					// If the owner of the connection is a client then we will use a nullpointer to reasure that the client has just one connection
+					// If the owner of the connection is a client then we will use a null pointer to reassure that the client has just one connection
 					m_qMessagesIn.push_back({ nullptr, m_msgTemporaryIn });
 				}
 				// When the message is finished on reading, we need to prime the context again into reading the next header available
@@ -294,7 +294,7 @@ namespace netmsg
 			}
 
 			// Data encryption for client/server communication, specific result and specific answer is given between the users 
-			// commnication, this will avoid overloading data in the server processor and will avoid port sniffers from having free access
+			// communication, this will avoid overloading data in the server processor and will avoid port sniffers from having free access
 			uint64_t scramble(uint64_t nInput)
 			{
 				uint64_t out = nInput ^ 0xDEADBEEFC0DECAFE;
@@ -324,7 +324,7 @@ namespace netmsg
 					});
 			};
 
-			// This funtion receives a pointer to a server class which will inform the user or the derived class that derivate the 
+			// This function receives a pointer to a server class which will inform the user or the derived class that derivate the 
 			// server that the client has been validated
 			void ReadValidation(netmsg::net::server_interface<T>* server = nullptr)
 			{
@@ -377,7 +377,7 @@ namespace netmsg
 			tsqueue<owned_message<T>>& m_qMessagesIn;
 
 			message<T> m_msgTemporaryIn;
-			// The iwner will decide how the connection will behave
+			// The owner will decide how the connection will behave
 			owner m_nOwnerType = owner::server;
 			// A variable which will allocate client identifiers
 			uint32_t id = 0;
@@ -420,6 +420,6 @@ namespace netmsg
 
 	Author
 	~~~~~~
-	David Barr, aka javidx9, ©OneLoneCoder 2019, 2020
+	David Barr, aka javidx9, ï¿½OneLoneCoder 2019, 2020
 
 */

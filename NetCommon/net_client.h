@@ -112,7 +112,7 @@ namespace netmsg
 			std::thread thrContext;
 			/*// client socket which will be connected to the server
 			asio::ip::tcp::socket m_socket;*/
-			// Single instance for the connection abject which will handle the dta transfer
+			// Single instance for the connection abject which will handle the data transfer
 			std::unique_ptr<connection<T>> m_connection;
 
 		private:
